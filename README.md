@@ -78,9 +78,10 @@ Click the green "+" (Add new configuration)
  
 - Use the IntelliJ console arrows to navigate up and down the stack traces.
 
-![IntelliJ console](https://i.imgur.com/QO5Qs7X.png)
+![IntelliJ console](https://i.imgur.com/0reDRBO.png)
 
-For smooth scrolling, use the keyboard shortcut **Ctr+Alt+Down**
+The way this is intended to be used is, assuming you don't have a debugger set up, you just click on your code and press **Command + Alt + Down** on Mac or **Ctr + Alt + Down** on Non-Mac to scroll through the print statements in the order in which they are executed. This is a convenient way to trace the execution of your code.
+
 ____________________________________________________________________________________________________________________
 
 <a name="Scala-Examples"></a>
