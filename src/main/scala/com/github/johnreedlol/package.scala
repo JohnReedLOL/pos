@@ -19,12 +19,12 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
-    def outImpl(c: Compatible.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def outImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
       val trimmedFileName: String = processFileName(fileName)
-      val path: String = Compatible.enclosingOwner(c).fullName.trim
+      val path: String = c.internal.enclosingOwner.fullName.trim
       val myStringTree: c.universe.Tree = toPrint.tree
       @SuppressWarnings(Array("org.wartremover.warts.Null"))
       val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
@@ -45,12 +45,12 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
-    def errImpl(c: Compatible.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def errImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
       val trimmedFileName: String = processFileName(fileName)
-      val path: String = Compatible.enclosingOwner(c).fullName.trim
+      val path: String = c.internal.enclosingOwner.fullName.trim
       val myStringTree: c.universe.Tree = toPrint.tree
       @SuppressWarnings(Array("org.wartremover.warts.Null"))
       val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
@@ -71,12 +71,12 @@ package object johnreedlol {
     /**
       * Do not call this - this is for internal use.
       */
-    def posImpl(c: Compatible.Context)(): c.Expr[String] = {
+    def posImpl(c: scala.reflect.macros.blackbox.Context)(): c.Expr[String] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
       val trimmedFileName: String = processFileName(fileName)
-      val path: String = Compatible.enclosingOwner(c).fullName.trim
+      val path: String = c.internal.enclosingOwner.fullName.trim
       val toReturn = q"""
         "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")"
       """
@@ -92,12 +92,12 @@ package object johnreedlol {
     * @example myVal = 3; codeErr{1 + 2 + myVal}
     */
   object codeErr {
-    def traceCodeImpl(c: Compatible.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
       val trimmedFileName: String = processFileName(fileName)
-      val path: String = Compatible.enclosingOwner(c).fullName.trim
+      val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
       @SuppressWarnings(Array("org.wartremover.warts.Any"))
       val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // [wartremover:Any] Inferred type containing Any
@@ -116,12 +116,12 @@ package object johnreedlol {
     * @example myVal = 3; codeOut{1 + 2 + myVal}
     */
   object codeOut {
-    def traceCodeImpl(c: Compatible.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
       val trimmedFileName: String = processFileName(fileName)
-      val path: String = Compatible.enclosingOwner(c).fullName.trim
+      val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
       @SuppressWarnings(Array("org.wartremover.warts.Any"))
       val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // Inferred type containing Any
@@ -145,7 +145,7 @@ package object johnreedlol {
   object check {
     def apply(assertion: Boolean): Unit = macro checkCodeImpl
 
-    def checkCodeImpl(c: Compatible.Context)(assertion: c.Expr[Boolean]): c.Expr[Unit] = {
+    def checkCodeImpl(c: scala.reflect.macros.blackbox.Context)(assertion: c.Expr[Boolean]): c.Expr[Unit] = {
       import c.universe._
       val sourceCode: c.Tree = new MacroHelperMethod[c.type](c).getSourceCode(assertion.tree)
       val arg2 = q""" "(" + $sourceCode + ") -> " + ({$assertion}.toString) """

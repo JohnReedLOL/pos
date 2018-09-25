@@ -15,7 +15,7 @@ object Main {
     Thread.sleep(milliseconds)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     out("Hello")
     sleep()
     err("World")

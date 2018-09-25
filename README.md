@@ -221,7 +221,7 @@ $ sbt
 [info] Set current project to pos (in build file:/home/.../pos/)
 > + clean
 > + compile 
-> + test
+> + test:run
 > + package
 ```
 

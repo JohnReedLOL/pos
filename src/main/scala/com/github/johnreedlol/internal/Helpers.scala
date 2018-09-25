@@ -1,13 +1,11 @@
 package com.github.johnreedlol.internal
 
-import com.github.johnreedlol.Compatible
-
 /**
   * Created by johnreed on 4/17/16. A place for helper methods.
   */
 protected[johnreedlol] object Helpers {
 
-  final class MacroHelperMethod[C <: Compatible.Context](val c: C) {
+  final class MacroHelperMethod[C <: scala.reflect.macros.blackbox.Context](val c: C) {
 
     @SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.NonUnitStatements", "org.wartremover.warts.AsInstanceOf"))
     def getSourceCode(toPrint: c.Tree): c.Tree = {
