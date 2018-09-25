@@ -78,7 +78,7 @@ Click the green "+" (Add new configuration)
  
 - Use the IntelliJ console arrows to navigate up and down the stack traces.
 
-![IntelliJ console](http://s29.postimg.org/ud0knou1j/debug_Screenshot_Crop.png)
+![IntelliJ console](https://i.imgur.com/QO5Qs7X.png)
 
 For smooth scrolling, use the keyboard shortcut **Ctr+Alt+Down**
 ____________________________________________________________________________________________________________________
