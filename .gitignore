@@ -1,0 +1,51 @@
+### Scala template
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+
+target/
+
+resources/info/collaboration_station/
+
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+#IntelliJ specific
+.idea
+*.iml
+.settings
+.classpath
+.project
+
+project/target/
+
+# Ignore local configuration
+.sbtrc
+
+# Ignore SBT files
+.jvm
+.cache-main
+.cache-tests
+
+# Ignore project files for IntelliJ
+*.iws
+
+# Ignore OS X metadata
+.DS_Store
+
+# Ignore vim swap files
+.swp
+.*.swp
+.swo
+.*.swo
