@@ -193,7 +193,7 @@ ________________________________________________________________________________
 <a name="Developers-Guide"></a>
 
 1. git clone https://github.com/JohnReedLOL/pos master
-2. cd $projectDirectory
+2. cd master/
 3. sbt test
 4. sbt test:run
 5. sbt package
