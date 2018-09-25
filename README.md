@@ -2,8 +2,7 @@
 
 **pos** is a hyperlink based print debugging system designed to work with any IDE or text editor that supports stack trace highlighting. Using compile-time macros in Scala to extract file names and line numbers, pos makes your print statements, assertions, and log statements easier to locate. Use it to append a "smart" hyperlink to your sourcecode, avoiding the need to "grep". Never use System.out/err.println again.
 
-[![Build Status](https://travis-ci.org/JohnReedLOL/scala-trace-debug.svg?branch=4.0)](https://travis-ci.org/JohnReedLOL/scala-trace-debug)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.johnreedlol/scala-trace-debug_2.11.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.johnreedlol%22)
+[![Build Status](https://travis-ci.com/JohnReedLOL/pos.svg?branch=master)](https://travis-ci.com/JohnReedLOL/pos)
 
 ____________________________________________________________________________________________________________________
 
@@ -15,7 +14,6 @@ Table of Contents
 * <a href="#Scala-Examples">Scala Examples</a>
 * <a href="#Building">Building</a>
 * <a href="#Developers-Guide">Developer's Guide</a>
-* <a href="#Contributors">Contributors</a>
 
 ____________________________________________________________________________________________________________________
 
@@ -43,6 +41,8 @@ ________________________________________________________________________________
 ### Getting Started:
 
 scala-trace-debug is available through [maven central](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.johnreedlol%22) as well as [bintray](https://bintray.com/johnreed2/maven/scala-trace-debug/).
+
+pos is based on scala-trace-debug.
 
 Add this to your pom.xml:
 
@@ -236,11 +236,3 @@ ________________________________________________________________________________
 ### Building:
 
 Java 8 and up
-____________________________________________________________________________________________________________________
-
-### Contributors
-
-<a name="Contributors"></a>
-
-- [cycorey](https://github.com/cycorey)
-- [MasseGuillaume](https://github.com/MasseGuillaume)
