@@ -15,7 +15,7 @@ protected[johnreedlol] object Helpers {
       val listOfTreePositions: List[Int] = toPrint.collect {
         case treeVal => treeVal.pos match {
           case NoPosition ⇒ Int.MaxValue
-          /** The start of the position's range, or point if not a range position. */
+          // The start of the position's range, or point if not a range position.
           case p ⇒ p.start
         }
       }

@@ -1,5 +1,8 @@
 package com.github.johnreedlol.internal;
 
+import java.net.URL;
+import java.security.CodeSource;
+
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
@@ -12,14 +15,7 @@ package com.github.johnreedlol.internal;
  * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
- */
-
-import java.net.URL;
-import java.security.CodeSource;
-
-// import java.security.AccessControlException; import java.security.AccessController;import java.security.PrivilegedAction;
-
-/**
+ *
  * Given a classname locate associated PackageInfo (jar name, version name).
  *
  * @author James Strachan
