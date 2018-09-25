@@ -88,8 +88,9 @@ ________________________________________________________________________________
 ##### Code Example:
 
 ```scala
-    import com.github.johnreedlol._
+  import com.github.johnreedlol._
 
+  def main(args: Array[String]): Unit = {
     out("Hello")
     sleep()
     err("World")
@@ -122,6 +123,7 @@ ________________________________________________________________________________
     check(three == four)
     sleep()
     check(three == four, "Three must not equal four")
+  }
 ```
 
 ```
