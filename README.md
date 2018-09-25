@@ -40,34 +40,22 @@ ________________________________________________________________________________
 
 ### Getting Started:
 
-scala-trace-debug is available through [maven central](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.johnreedlol%22) as well as [bintray](https://bintray.com/johnreed2/maven/scala-trace-debug/).
+pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
-pos is based on scala-trace-debug.
+It was packaged and published like so: https://gist.github.com/JohnReedLOL/9512f8d91ac73332568ff82e6042b29a
 
-Add this to your pom.xml:
-
-```scala
-<dependency>
-  <groupId>com.github.johnreedlol</groupId>
-  <artifactId>scala-trace-debug_2.11</artifactId>
-  <version>4.5.0</version>
-  <type>pom</type>
-</dependency>
-```
+pos is based on [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
 Add this to your build.sbt:
 
 ```scala
-libraryDependencies += "com.github.johnreedlol" %% "scala-trace-debug" % "4.5.0"
+resolvers += Resolver.bintrayRepo("johnreed2","maven")
+
+libraryDependencies += "com.github.johnreedlol" %% "pos" % "1.0.0"
+
 ```
 
-If you get: "NoClassDefFoundError: scala/reflect/runtime/package ... Caused by: java.lang.ClassNotFoundException"
-
-Add: `libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value`
-
-Java users need to add [this](http://mvnrepository.com/artifact/org.scala-lang/scala-library) dependency to the maven build.
-
-For Scala 2.12.0 and above, please build [this branch](https://github.com/JohnReedLOL/scala-trace-debug/tree/5.0).
+To avoid having deprecated stuff, this library only works for Scala 2.10 and up
 ____________________________________________________________________________________________________________________
 
 <a name="Instructions"></a>
@@ -96,12 +84,6 @@ For smooth scrolling, use the keyboard shortcut **Ctr+Alt+Down**
 ____________________________________________________________________________________________________________________
 
 <a name="Scala-Examples"></a>
-
-### Scala Examples:
-
-![Scala Example](http://i.imgur.com/JHiMwjS.png)
-
-^ Note that the `Debug` object does not use compile time macros and is a throwback to the days when this project was a print debugging system for Java.
 
 ##### Code Example:
 
@@ -226,8 +208,6 @@ $ sbt
 ```
 
 * "+" means "cross-building"
-
-Artifacts are published using `> publish-signed`, the public key is 3E2B27D9
 
 ____________________________________________________________________________________________________________________
 
