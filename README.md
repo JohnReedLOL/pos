@@ -72,7 +72,7 @@ Run > Edit Configurations... > SBT Task
 
 Click the green "+" (Add new configuration)
 
-![Example](http://i.imgur.com/UPZAJHo.png)
+![Example](https://i.imgur.com/hQsYPDW.png)
 
 - Place some calls to scala trace debug and click the green 'Debug' (Shift+F9) button and follow the stack traces in the console. 
  
