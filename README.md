@@ -2,7 +2,7 @@
 
 **pos** is a hyperlink based print debugging system designed to work with any IDE or text editor that supports stack trace highlighting. Using compile-time macros in Scala to extract file names and line numbers, pos makes your print statements, assertions, and log statements easier to locate. Use it to append a "smart" hyperlink to your sourcecode, avoiding the need to "grep". Never use System.out/err.println again.
 
-[![Build Status](https://travis-ci.com/JohnReedLOL/pos.svg?branch=master)](https://travis-ci.com/JohnReedLOL/pos)
+[![Build Status](https://travis-ci.com/JohnReedLOL/pos.svg?branch=master)](https://travis-ci.com/JohnReedLOL/pos) [![Join the chat at https://gitter.im/scalaPos/Lobby](https://badges.gitter.im/scalaPos/Lobby.svg)](https://gitter.im/scalaPos/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ____________________________________________________________________________________________________________________
 
