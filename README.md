@@ -12,8 +12,8 @@ Table of Contents
 * <a href="#Getting-Started">Getting Started</a>
 * <a href="#Instructions">Instructions for IDEA</a>
 * <a href="#Scala-Examples">Scala Examples</a>
-* <a href="#Building">Building</a>
 * <a href="#Developers-Guide">Developer's Guide</a>
+* <a href="#Building">Building</a>
 
 ____________________________________________________________________________________________________________________
 
