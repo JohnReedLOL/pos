@@ -44,8 +44,6 @@ pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
 It was packaged and published like so:
 
-[Publish 1.1.0](https://gist.githubusercontent.com/JohnReedLOL/670b7c88d7e0e5137b0a11960e994cf9/raw/33187581996501c27d0ed153fcf5fd787b97a6df/publish1.1.0.txt)
-
 [Publish 1.2.0](https://gist.githubusercontent.com/JohnReedLOL/e8d43e59bb296dea923da335b5f6fe39/raw/4b0108345074f567c84b2becb31248376a5dca71/publish_1.2.0.txt)
 
 pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
