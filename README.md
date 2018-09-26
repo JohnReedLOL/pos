@@ -90,7 +90,7 @@ ________________________________________________________________________________
 
 <a name="Scala-Examples"></a>
 
-##### Code Example:
+### Scala Example:
 
 See [this file](src/test/scala/my/pkg/Main.scala) and run it yourself with "sbt test:run".
 
