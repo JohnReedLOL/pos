@@ -1,6 +1,6 @@
 # pos: Better than System.out.println
 
-**pos** is a hyperlink based print debugging system designed to work with any IDE or text editor that supports stack trace highlighting. Using compile-time macros in Scala to extract file names and line numbers, pos makes your print statements, assertions, and log statements easier to locate. Use it to append a "smart" hyperlink to your sourcecode, avoiding the need to "grep". Never use System.out/err.println again.
+**pos** is a hyperlink based print debugging system designed to work with any IDE or text editor that supports stack trace highlighting. Using compile-time macros in Scala to extract file names and line numbers, pos makes your print statements, assertions, and log statements easier to locate. Use it to append a "smart" hyperlink to your sourcecode, avoiding the need to "grep" or use "Ctr + F" to locate print statements. Never use System.out/err.println again.
 
 [![Build Status](https://travis-ci.com/JohnReedLOL/pos.svg?branch=master)](https://travis-ci.com/JohnReedLOL/pos) [![Join the chat at https://gitter.im/scalaPos/Lobby](https://badges.gitter.im/scalaPos/Lobby.svg)](https://gitter.im/scalaPos/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -26,7 +26,7 @@ ________________________________________________________________________________
 
 ^ Clicking on the compile-time generated file name and line number will cause you to jump to that line in your source code.
 
-Better than using println!
+Better than using println! Also, it is safe to pass in null.
 
 Use it with a logger like so:
 
@@ -44,7 +44,7 @@ pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
 It was packaged and published like so: https://gist.github.com/JohnReedLOL/9512f8d91ac73332568ff82e6042b29a
 
-[Most recent publish.](https://gist.githubusercontent.com/JohnReedLOL/670b7c88d7e0e5137b0a11960e994cf9/raw/33187581996501c27d0ed153fcf5fd787b97a6df/publish1.1.0.txt)
+[Publish 1.1.0](https://gist.githubusercontent.com/JohnReedLOL/670b7c88d7e0e5137b0a11960e994cf9/raw/33187581996501c27d0ed153fcf5fd787b97a6df/publish1.1.0.txt)
 
 pos is based on [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 

@@ -14,22 +14,38 @@ package object johnreedlol {
     * @example out("Hello World")
     */
   object out {
-    def apply(toPrint: Any): Unit = macro outImpl
+    def apply(toPrint: AnyVal): Unit = macro outImpl
+    def apply(toPrint: AnyRef): Unit = macro outImplReference
 
     /**
       * Macro implementation.
       */
-    def outImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def outImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
-      val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
-      val trimmedFileName: String = processFileName(fileName)
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      val myStringTree: c.universe.Tree = toPrint.tree
-      @SuppressWarnings(Array("org.wartremover.warts.Null"))
-      val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
+      val myString: c.universe.Tree = q"""{$toPrint.toString()}"""
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+      """
+      c.Expr[Unit](toReturn)
+    }
+
+    /**
+      * For references (which extend AnyRef), we need to do a null check.
+      */
+    def outImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+      import c.universe._
+      val lineNum: String = c.enclosingPosition.line.toString
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
+      val path: String = c.internal.enclosingOwner.fullName.trim
+      @SuppressWarnings(Array("org.wartremover.warts.Null"))
+      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
+      val toReturn = q"""
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -40,22 +56,38 @@ package object johnreedlol {
     * @example err("Hello World")
     */
   object err {
-    def apply(toPrint: Any): Unit = macro errImpl
+    def apply(toPrint: AnyVal): Unit = macro errImpl
+    def apply(toPrint: AnyRef): Unit = macro errImplReference
 
     /**
       * Macro implementation.
       */
-    def errImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def errImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
-      val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
-      val trimmedFileName: String = processFileName(fileName)
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      val myStringTree: c.universe.Tree = toPrint.tree
-      @SuppressWarnings(Array("org.wartremover.warts.Null"))
-      val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
+      val myString: c.universe.Tree = q"""{$toPrint.toString()}"""
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+      """
+      c.Expr[Unit](toReturn)
+    }
+
+    /**
+      * For references (which extend AnyRef), we need to do a null check.
+      */
+    def errImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+      import c.universe._
+      val lineNum: String = c.enclosingPosition.line.toString
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
+      val path: String = c.internal.enclosingOwner.fullName.trim
+      @SuppressWarnings(Array("org.wartremover.warts.Null"))
+      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
+      val toReturn = q"""
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -74,11 +106,11 @@ package object johnreedlol {
     def posImpl(c: scala.reflect.macros.blackbox.Context)(): c.Expr[String] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
-      val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
-      val trimmedFileName: String = processFileName(fileName)
+      val pathAndFileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
+      val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val toReturn = q"""
-        "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")"
+        "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")"
       """
       c.Expr[String](toReturn)
     }
@@ -92,23 +124,46 @@ package object johnreedlol {
     * @example myVal = 3; codeErr{1 + 2 + myVal}
     */
   object codeErr {
-    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def apply(toPrint: AnyVal): Unit = macro traceCodeImpl
+    def apply(toPrint: AnyRef): Unit = macro traceCodeImplReference
+
+    /**
+      * Macro implementation.
+      */
+    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
-      val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
-      val trimmedFileName: String = processFileName(fileName)
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
       @SuppressWarnings(Array("org.wartremover.warts.Any"))
-      val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // [wartremover:Any] Inferred type containing Any
+      val myString: c.universe.Tree = q"""{"(" + $blockString + ") -> " + ({$toPrint}.toString)}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
 
-    def apply(toPrint: Any): Unit = macro traceCodeImpl
+    /**
+      * For references (which extend AnyRef), we need to do a null check.
+      */
+    def traceCodeImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+      import c.universe._
+      val lineNum: String = c.enclosingPosition.line.toString
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
+      val path: String = c.internal.enclosingOwner.fullName.trim
+      val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
+      @SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.Null"))
+      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
+      // The java stack traces use a tab character \t, not a space.
+      val toReturn = q"""
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+      """
+      c.Expr[Unit](toReturn)
+    }
   }
 
   /**
@@ -116,23 +171,46 @@ package object johnreedlol {
     * @example myVal = 3; codeOut{1 + 2 + myVal}
     */
   object codeOut {
-    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Any]): c.Expr[Unit] = {
+    def apply(toPrint: AnyVal): Unit = macro traceCodeImpl
+    def apply(toPrint: AnyRef): Unit = macro traceCodeImplReference
+
+    /**
+      * Macro implementation.
+      */
+    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
-      val fileName: String = c.enclosingPosition.source.path // This needs to be trimmed down
-      val trimmedFileName: String = processFileName(fileName)
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
       @SuppressWarnings(Array("org.wartremover.warts.Any"))
-      val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // Inferred type containing Any
+      val myString: c.universe.Tree = q"""{"(" + $blockString + ") -> " + ({$toPrint}.toString)}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
 
-    def apply(toPrint: Any): Unit = macro traceCodeImpl
+    /**
+      * For references (which extend AnyRef), we need to do a null check.
+      */
+    def traceCodeImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+      import c.universe._
+      val lineNum: String = c.enclosingPosition.line.toString
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
+      val path: String = c.internal.enclosingOwner.fullName.trim
+      val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
+      @SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.Null"))
+      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
+      // The java stack traces use a tab character \t, not a space.
+      val toReturn = q"""
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+      """
+      c.Expr[Unit](toReturn)
+    }
   }
 
   // Warning: You can't pass in : =>Boolean without getting "java.lang.IllegalArgumentException: Could not find proxy for val myVal"
@@ -170,11 +248,11 @@ package object johnreedlol {
     Printer.internalAssert(assertion, message)
   }
 
-  protected[johnreedlol] def processFileName(fileName: String): String = {
-    if (fileName.contains("/")) {
-      fileName.split("/").last
+  protected[johnreedlol] def getFileName(path: String): String = {
+    if (path.contains("/")) {
+      path.split("/").last
     } else {
-      fileName.split("\\\\").last
+      path.split("\\\\").last
     }
   }
 
