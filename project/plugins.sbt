@@ -1,11 +1,11 @@
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.4")
 
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
 
 // Removes warts like null
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.3.4")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.3.7")
 
 // resolvers += Resolver.sonatypeRepo("releases")
 
