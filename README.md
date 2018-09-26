@@ -22,7 +22,7 @@ ________________________________________________________________________________
 
 ### Locate Statements:
 
-![Append Position](https://i.imgur.com/hNTzyhJ.png)
+![Append Position](https://i.imgur.com/JHxkGlH.png)
 
 ^ Clicking on the compile-time generated file name and line number will cause you to jump to that line in your source code.
 
@@ -42,11 +42,13 @@ ________________________________________________________________________________
 
 pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
-It was packaged and published like so: https://gist.github.com/JohnReedLOL/9512f8d91ac73332568ff82e6042b29a
+It was packaged and published like so:
 
 [Publish 1.1.0](https://gist.githubusercontent.com/JohnReedLOL/670b7c88d7e0e5137b0a11960e994cf9/raw/33187581996501c27d0ed153fcf5fd787b97a6df/publish1.1.0.txt)
 
-pos is based on [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
+[Publish 1.2.0](https://gist.githubusercontent.com/JohnReedLOL/e8d43e59bb296dea923da335b5f6fe39/raw/4b0108345074f567c84b2becb31248376a5dca71/publish_1.2.0.txt)
+
+pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
 Add this to your build.sbt:
 
