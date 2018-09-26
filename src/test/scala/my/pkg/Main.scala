@@ -59,32 +59,21 @@ ComputerName: username$ sbt
 [info] Loading project definition from /Users/username/Downloads/scala-trace-debug/5.0/project
 Missing bintray credentials /Users/username/.bintray/.credentials. Some bintray features depend on this.
 [info] Set current project to scala-trace-debug (in build file:/Users/username/Downloads/scala-trace-debug/5.0/)
-> compile
-[warn] Credentials file /Users/username/.bintray/.credentials does not exist
-[success] Total time: 0 s, completed Sep 24, 2018 6:12:01 PM
 > test:run
-[warn] Credentials file /Users/username/.bintray/.credentials does not exist
+[info] Compiling 1 Scala source to /Users/john-michaelreed/Downloads/scala-trace-debug/5.0/target/scala-2.12/test-classes...
 [info] Running my.pkg.Main
-Hello
-        at my.pkg.Main.main(Main.scala:16)
-World
-        at my.pkg.Main.main(Main.scala:18)
-Hello apply
-        at my.pkg.Main.main(Main.scala:20)
-World apply
-        at my.pkg.Main.main(Main.scala:22)
-You have to put parenthesis on pos or else it will just print this: com.github.johnreedlol.package$pos$@6baf699a
-This will contain a compiler generated stack trace
-        at my.pkg.Main.main(Main.scala:25)
-This will also contain a compiler generated stack trace
-        at my.pkg.Main.main(Main.scala:27)
+Hello   at my.pkg.Main.main(Main.scala:19)
+World   at my.pkg.Main.main(Main.scala:21)
+Hello apply     at my.pkg.Main.main(Main.scala:23)
+World apply     at my.pkg.Main.main(Main.scala:25)
+You have to put parenthesis on pos or else it will just print this: com.github.johnreedlol.package$pos$@294c4e4f
+This will contain a compiler generated stack trace      at my.pkg.Main.main(Main.scala:28)
+This will also contain a compiler generated stack trace at my.pkg.Main.main(Main.scala:30)
 This line will not contain a compiler generated stack trace.
-(one + two) -> 3
-        at my.pkg.Main.main(Main.scala:33)
-(three * four) -> 12
-        at my.pkg.Main.main(Main.scala:37)
+(one + two) -> 3        at my.pkg.Main.main(Main.scala:36)
+(three * four) -> 12    at my.pkg.Main.main(Main.scala:40)
 "(three == four) -> false" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:45)
+        at my.pkg.Main$.main(Main.scala:48)
         at my.pkg.Main.main(Main.scala)
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -101,7 +90,7 @@ This line will not contain a compiler generated stack trace.
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
 "Three must not equal four" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:47)
+        at my.pkg.Main$.main(Main.scala:50)
         at my.pkg.Main.main(Main.scala)
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -117,6 +106,6 @@ This line will not contain a compiler generated stack trace.
         at sbt.TrapExit$App.run(TrapExit.scala:248)
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
-[success] Total time: 1 s, completed Sep 24, 2018 6:12:08 PM
+[success] Total time: 3 s, completed Sep 26, 2018 12:02:35 PM
 > exit
  */

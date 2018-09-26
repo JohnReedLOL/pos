@@ -51,7 +51,7 @@ Add this to your build.sbt:
 ```scala
 resolvers += Resolver.bintrayRepo("johnreed2","maven")
 
-libraryDependencies += "com.github.johnreedlol" %% "pos" % "1.0.0"
+libraryDependencies += "com.github.johnreedlol" %% "pos" % <most recent version as seen in [build.sbt](build.sbt)>
 
 ```
 
@@ -88,104 +88,7 @@ ________________________________________________________________________________
 
 ##### Code Example:
 
-```scala
-  import com.github.johnreedlol._
-
-  def main(args: Array[String]): Unit = {
-    out("Hello")
-    sleep()
-    err("World")
-    sleep()
-    out.apply("Hello apply")
-    sleep()
-    err.apply("World apply")
-    sleep()
-    println("You have to put parenthesis on pos or else it will just print this: " + pos.toString)
-    println("This will contain a compiler generated stack trace" + pos())
-    sleep()
-    println("This will also contain a compiler generated stack trace" + pos.apply())
-    sleep()
-    println("This line will not contain a compiler generated stack trace.")
-    sleep()
-    val one = 1
-    val two = 2
-    codeOut(one + two)
-    sleep()
-    val three = 3
-    val four = 4
-    codeErr(three * four)
-    sleep()
-    check(three != four, "Three must not equal four")
-    // These two lines should be the same
-    check(three != four)
-    check.apply(three != four)
-    sleep()
-    // This should generate a stack trace
-    check(three == four)
-    sleep()
-    check(three == four, "Three must not equal four")
-  }
-```
-
-```
-Output:
-
-Hello
-        at my.pkg.Main.main(Main.scala:16)
-World
-        at my.pkg.Main.main(Main.scala:18)
-Hello apply
-        at my.pkg.Main.main(Main.scala:20)
-World apply
-        at my.pkg.Main.main(Main.scala:22)
-You have to put parenthesis on pos or else it will just print this: com.github.johnreedlol.package$pos$@6baf699a
-This will contain a compiler generated stack trace
-        at my.pkg.Main.main(Main.scala:25)
-This will also contain a compiler generated stack trace
-        at my.pkg.Main.main(Main.scala:27)
-This line will not contain a compiler generated stack trace.
-(one + two) -> 3
-        at my.pkg.Main.main(Main.scala:33)
-(three * four) -> 12
-        at my.pkg.Main.main(Main.scala:37)
-"(three == four) -> false" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:45)
-        at my.pkg.Main.main(Main.scala)
-        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-        at java.lang.reflect.Method.invoke(Method.java:498)
-        at sbt.Run.invokeMain(Run.scala:67)
-        at sbt.Run.run0(Run.scala:61)
-        at sbt.Run.sbt$Run$$execute$1(Run.scala:51)
-        at sbt.Run$$anonfun$run$1.apply$mcV$sp(Run.scala:55)
-        at sbt.Run$$anonfun$run$1.apply(Run.scala:55)
-        at sbt.Run$$anonfun$run$1.apply(Run.scala:55)
-        at sbt.Logger$$anon$4.apply(Logger.scala:85)
-        at sbt.TrapExit$App.run(TrapExit.scala:248)
-        at java.lang.Thread.run(Thread.java:748)
-^ The above stack trace leads to an assertion failure. ^
-"Three must not equal four" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:47)
-        at my.pkg.Main.main(Main.scala)
-        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-        at java.lang.reflect.Method.invoke(Method.java:498)
-        at sbt.Run.invokeMain(Run.scala:67)
-        at sbt.Run.run0(Run.scala:61)
-        at sbt.Run.sbt$Run$$execute$1(Run.scala:51)
-        at sbt.Run$$anonfun$run$1.apply$mcV$sp(Run.scala:55)
-        at sbt.Run$$anonfun$run$1.apply(Run.scala:55)
-        at sbt.Run$$anonfun$run$1.apply(Run.scala:55)
-        at sbt.Logger$$anon$4.apply(Logger.scala:85)
-        at sbt.TrapExit$App.run(TrapExit.scala:248)
-        at java.lang.Thread.run(Thread.java:748)
-^ The above stack trace leads to an assertion failure. ^
-
-```
-
-##### ^ [Run it yourself](src/test/scala/my/pkg/Main.scala) with "sbt test:run" ^
+See [this file](src/test/scala/my/pkg/Main.scala) and run it yourself with "sbt test:run".
 
 ____________________________________________________________________________________________________________________
 
@@ -195,7 +98,7 @@ ________________________________________________________________________________
 
 1. git clone https://github.com/JohnReedLOL/pos master
 2. cd master/
-3. sbt test
+3. sbt compile
 4. sbt test:run
 5. sbt package
 
@@ -205,7 +108,8 @@ $ sbt
 [info] Loading project definition from /home/.../pos/project
 [info] Set current project to pos (in build file:/home/.../pos/)
 > + clean
-> + compile 
+> + compile
+> + test:compile
 > + test:run
 > + package
 ```

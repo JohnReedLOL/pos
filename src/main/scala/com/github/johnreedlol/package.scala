@@ -29,7 +29,7 @@ package object johnreedlol {
       @SuppressWarnings(Array("org.wartremover.warts.Null"))
       val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -55,7 +55,7 @@ package object johnreedlol {
       @SuppressWarnings(Array("org.wartremover.warts.Null"))
       val myString: c.universe.Tree = q"""{if($myStringTree == null) {"null"} else {$myStringTree.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -78,7 +78,7 @@ package object johnreedlol {
       val trimmedFileName: String = processFileName(fileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val toReturn = q"""
-        "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")"
+        "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")"
       """
       c.Expr[String](toReturn)
     }
@@ -103,7 +103,7 @@ package object johnreedlol {
       val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // [wartremover:Any] Inferred type containing Any
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -127,7 +127,7 @@ package object johnreedlol {
       val myString = q""" "(" + $blockString + ") -> " + ({$toPrint}.toString) """ // Inferred type containing Any
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\n\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
+        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $trimmedFileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }

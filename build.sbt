@@ -6,15 +6,15 @@ description := "Macro based print debugging. Locates log statements in your IDE.
 
 developers := List(Developer(id = "johnreedlol", name = "John-Michael Reed", email = "johnmichaelreedfas@gmail.com", new URL("https://github.com/JohnReedLOL")))
 
-scmInfo := Some(ScmInfo(new URL("https://github.com/JohnReedLOL/scala-trace-debug"),
-  "scm:git:git://github.com/JohnReedLOL/scala-trace-debug.git",
+scmInfo := Some(ScmInfo(new URL("https://github.com/JohnReedLOL/pos"),
+  "scm:git:git://github.com/JohnReedLOL/pos.git",
   None))
 
-pomExtra := <url>https://github.com/JohnReedLOL/scala-trace-debug</url>
+pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
 scalaVersion := "2.12.6"
 
-version := "1.0.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "1.1.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
 crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
 
@@ -42,7 +42,7 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 bintrayPackageLabels := Seq("debug", "scala", "trace", "debugging", "assert", "pos")
 
-bintrayVcsUrl := Some("git@github.com:JohnReedLOL/scala-trace-debug.git")
+bintrayVcsUrl := Some("git@github.com:JohnReedLOL/pos.git")
 
 // Turn on all checks that are currently considered stable:
 wartremoverErrors ++= Warts.unsafe
