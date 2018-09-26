@@ -54,7 +54,7 @@ Add these two lines to your build.sbt:
 
 `resolvers += Resolver.bintrayRepo("johnreed2","maven")`
 
-`libraryDependencies += "com.github.johnreedlol" %% "pos" % <most recent version as seen in: ` [build.sbt](build.sbt) ` >`
+`libraryDependencies += "com.github.johnreedlol" %% "pos" % <most recent version as seen in:` [build.sbt](build.sbt) `>`
 
 To avoid having deprecated stuff, this library only works for Scala 2.10 and up
 ____________________________________________________________________________________________________________________
