@@ -1,4 +1,4 @@
-# pos: Better than System.out.println
+# pos: print debugging on steroids
 
 **pos** is a hyperlink based print debugging system designed to work with any IDE or text editor that supports stack trace highlighting. Using compile-time macros in Scala to extract file names and line numbers, pos makes your print statements, assertions, and log statements easier to locate. Use it to append a "smart" hyperlink to your sourcecode, avoiding the need to "grep" or use "Ctr + F" to locate print statements. Never use System.out/err.println again.
 
