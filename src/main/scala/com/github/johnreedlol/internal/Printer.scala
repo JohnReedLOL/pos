@@ -3,6 +3,7 @@ package com.github.johnreedlol.internal
 /**
   * Created by johnreed on 4/12/16 for https://github.com/JohnReedLOL/scala-trace-debug
   */
+@SuppressWarnings(Array("org.wartremover.warts.Equals")) // We use == and != instead of === and =!= because no cats
 protected[johnreedlol] object Printer {
 
   /**
@@ -41,20 +42,19 @@ protected[johnreedlol] object Printer {
     *
     * @param toPrintOutNullable    the object to print out. May be "null"
     */
-  protected[johnreedlol] final def internalAssert[A](
-     assertionTrue_? : Boolean, toPrintOutNullable: A): Unit = {
+  protected[johnreedlol] final def internalAssert(
+     assertionTrue_? : Boolean, toPrintOutNullable: String): Unit = {
     if (!assertionTrue_?) {
       val toPrintOut: String = if (toPrintOutNullable == null) {
         "null"
       } else {
-        toPrintOutNullable.toString // calling toString on null is bad
+        toPrintOutNullable
       }
       @SuppressWarnings(Array("org.wartremover.warts.Var"))
       var toPrint: String = "\"" + toPrintOut + "\"" + " in thread " + Thread.currentThread().getName + ":" // [wartremover:Var] var is disabled
-      val numStackLinesIntended: Int = Int.MaxValue // This variable is from when the number of lines of stack trace was configurable
       // Only make call to Thread.currentThread().getStackTrace if there is a stack to print
       val stack: Array[StackTraceElement] = Thread.currentThread().getStackTrace
-      for (row <- 0 to Math.min(numStackLinesIntended - 1, stack.length - 1 - newStackOffset)) {
+      for (row <- 0 to stack.length - 1 - newStackOffset) {
         val lineNumber: Int = newStackOffset + row
         val stackLine: StackTraceElement = stack(lineNumber)
         val packageName: String = getPackageName(stackLine)

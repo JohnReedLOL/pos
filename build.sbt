@@ -14,7 +14,7 @@ pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
 scalaVersion := "2.12.6"
 
-version := "1.2.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "1.3.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
 crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
 
@@ -31,8 +31,11 @@ def macroDependencies(version: String): Seq[ModuleID] = Seq(
 
 libraryDependencies ++= macroDependencies(scalaVersion.value)
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Ywarn-inaccessible",
-  "-Ywarn-nullary-override", "-Ywarn-nullary-unit", "-Xfatal-warnings")
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Ywarn-inaccessible", "-language:higherKinds",
+  "-language:implicitConversions", "-Ywarn-dead-code", "-Ywarn-value-discard", "-Ywarn-nullary-override",
+  "-Ywarn-unused-import", "-Ywarn-nullary-unit", "-Xfatal-warnings")
+
+scalacOptions in Test --= Seq("-Xfatal-warnings")
 
 bintrayReleaseOnPublish in ThisBuild := true
 
@@ -45,4 +48,4 @@ bintrayPackageLabels := Seq("debug", "scala", "trace", "debugging", "assert", "p
 bintrayVcsUrl := Some("git@github.com:JohnReedLOL/pos.git")
 
 // Turn on all checks that are currently considered stable:
-wartremoverErrors ++= Warts.unsafe
+wartremoverErrors ++= Warts.all

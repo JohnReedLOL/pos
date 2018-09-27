@@ -1,10 +1,9 @@
 package my.pkg
 
-import com.github.johnreedlol._
-
 /**
   * Created by johnreed on 3/23/16. Run with sbt test:run
   */
+@SuppressWarnings(Array("org.wartremover.warts.Equals")) // We use == and != instead of === and =!= because no cats
 object Main {
 
   /**
@@ -16,42 +15,39 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
+    /*
+     * Note: `out(5)` emits "comparing values of types Int and Null using `==' will always yield false"
+     * This was fixed in version 1.2.0, but that fix required method overloading and caused problems when passing in values of type "Any"
+     * So I removed that fix in version 1.3.0
+     */
+    import com.github.johnreedlol._
     out(5)
-    sleep()
     out("Hello")
     sleep()
     err("World")
-    sleep()
     err(6)
     sleep()
     out.apply("Hello apply")
     sleep()
     err.apply("World apply")
     sleep()
-    println("You have to put parenthesis on pos or else it will just print this: " + pos.toString)
     println("This will contain a compiler generated stack trace" + pos())
-    sleep()
     println("This will also contain a compiler generated stack trace" + pos.apply())
-    sleep()
     println("This line will not contain a compiler generated stack trace.")
-    sleep()
     val one = 1
     val two = 2
-    codeOut.apply(one + two)
+    codeOut(one + two)
     sleep()
     val three = 3
     val four = 4
     codeErr(three * four)
-    sleep()
-    check(three != four, "Three must not equal four")
+    checkWithMessage(three != four, "Three must not equal four")
     // These two lines should be the same
     check(three != four)
     check.apply(three != four)
-    sleep()
     // This should generate a stack trace
     check(three == four)
-    sleep()
-    check(three == four, "Three must not equal four")
+    checkWithMessage(three == four, "Three must not equal four")
     sleep()
     runNullSafetyTest()
   }
@@ -61,6 +57,7 @@ object Main {
     */
   @SuppressWarnings(Array("org.wartremover.warts.Null"))
   def runNullSafetyTest(): Unit = {
+    import com.github.johnreedlol._
     out((null: String))
     sleep()
     err((null: String))
@@ -68,11 +65,6 @@ object Main {
     out.apply((null: String))
     sleep()
     err.apply((null: String))
-    sleep()
-    println("You have to put parenthesis on pos or else it will just print this: " + pos.toString)
-    println("This will contain a compiler generated stack trace" + pos())
-    sleep()
-    println("This will also contain a compiler generated stack trace" + pos.apply())
     sleep()
     println((null: String))
     sleep()
@@ -95,34 +87,48 @@ username$ sbt
 [info] Set current project to pos (in build file:/Users/username/Downloads/scala-trace-debug/5.0/)
 [info] sbt server started at local:///Users/username/.sbt/1.0/server/62a082dda9271e30c434/sock
 sbt:pos> compile
+[info] Updating ...
+[info] Done updating.
 [info] Compiling 3 Scala sources and 1 Java source to /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/classes ...
 [info] Done compiling.
-[success] Total time: 13 s, completed Sep 26, 2018 2:42:03 PM
+[success] Total time: 12 s, completed Sep 27, 2018 10:22:42 AM
 sbt:pos> test:compile
 [info] Compiling 1 Scala source to /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/test-classes ...
+[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:25:8: comparing values of types Int and Null using `==' will always yield false
+[warn]     out(5)
+[warn]        ^
+[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:31:8: comparing values of types Int and Null using `==' will always yield false
+[warn]     err(6)
+[warn]        ^
+[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:45:12: comparing values of types Int and Null using `==' will always yield false
+[warn]     codeOut(one + two)
+[warn]            ^
+[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:49:12: comparing values of types Int and Null using `==' will always yield false
+[warn]     codeErr(three * four)
+[warn]            ^
+[warn] four warnings found
 [info] Done compiling.
-[success] Total time: 1 s, completed Sep 26, 2018 2:42:15 PM
+[success] Total time: 2 s, completed Sep 27, 2018 10:22:47 AM
 sbt:pos> test:run
-[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-1.1.0-tests.jar ...
-[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-1.1.0.jar ...
+[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-1.3.0-tests.jar ...
+[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-1.3.0.jar ...
 [info] Done packaging.
 [info] Done packaging.
 [info] Running my.pkg.Main
-5       at my.pkg.Main.main(Main.scala:19)
-Hello   at my.pkg.Main.main(Main.scala:21)
-World   at my.pkg.Main.main(Main.scala:23)
-6       at my.pkg.Main.main(Main.scala:25)
-Hello apply     at my.pkg.Main.main(Main.scala:27)
-World apply     at my.pkg.Main.main(Main.scala:29)
-You have to put parenthesis on pos or else it will just print this: com.github.johnreedlol.package$pos$@59567797
-This will contain a compiler generated stack trace      at my.pkg.Main.main(Main.scala:32)
-This will also contain a compiler generated stack trace at my.pkg.Main.main(Main.scala:34)
+5       at my.pkg.Main.main(Main.scala:25)
+Hello   at my.pkg.Main.main(Main.scala:27)
+World   at my.pkg.Main.main(Main.scala:29)
+6       at my.pkg.Main.main(Main.scala:31)
+Hello apply     at my.pkg.Main.main(Main.scala:33)
+World apply     at my.pkg.Main.main(Main.scala:35)
+This will contain a compiler generated stack trace      at my.pkg.Main.main(Main.scala:37)
+This will also contain a compiler generated stack trace at my.pkg.Main.main(Main.scala:39)
 This line will not contain a compiler generated stack trace.
-(one + two) -> 3        at my.pkg.Main.main(Main.scala:40)
-(three * four) -> 12    at my.pkg.Main.main(Main.scala:44)
+(one + two) -> 3        at my.pkg.Main.main(Main.scala:45)
+(three * four) -> 12    at my.pkg.Main.main(Main.scala:49)
 "(three == four) -> false" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:52) [pos_2.12-1.1.0-tests.jar]
-        at my.pkg.Main.main(Main.scala) [pos_2.12-1.1.0-tests.jar]
+        at my.pkg.Main$.main(Main.scala:57) [pos_2.12-1.3.0-tests.jar]
+        at my.pkg.Main.main(Main.scala) [pos_2.12-1.3.0-tests.jar]
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -137,8 +143,8 @@ This line will not contain a compiler generated stack trace.
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
 "Three must not equal four" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:54) [pos_2.12-1.1.0-tests.jar]
-        at my.pkg.Main.main(Main.scala) [pos_2.12-1.1.0-tests.jar]
+        at my.pkg.Main$.main(Main.scala:59) [pos_2.12-1.3.0-tests.jar]
+        at my.pkg.Main.main(Main.scala) [pos_2.12-1.3.0-tests.jar]
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -152,17 +158,15 @@ This line will not contain a compiler generated stack trace.
         at sbt.TrapExit$App.run(TrapExit.scala:252)
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:64)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:66)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:68)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:70)
-You have to put parenthesis on pos or else it will just print this: com.github.johnreedlol.package$pos$@59567797
-This will contain a compiler generated stack trace      at my.pkg.Main.runNullSafetyTest(Main.scala:73)
-This will also contain a compiler generated stack trace at my.pkg.Main.runNullSafetyTest(Main.scala:75)
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:69)
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:71)
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:73)
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:75)
 null
 null    at my.pkg.Main.runNullSafetyTest(Main.scala:79)
 null    at my.pkg.Main.runNullSafetyTest(Main.scala:81)
-[success] Total time: 2 s, completed Sep 26, 2018 2:42:22 PM
+[success] Total time: 2 s, completed Sep 27, 2018 10:22:52 AM
 sbt:pos> exit
 [info] shutting down server
+
  */

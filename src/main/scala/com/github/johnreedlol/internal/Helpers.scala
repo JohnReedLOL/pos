@@ -7,7 +7,7 @@ protected[johnreedlol] object Helpers {
 
   final class MacroHelperMethod[C <: scala.reflect.macros.blackbox.Context](val c: C) {
 
-    @SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.NonUnitStatements", "org.wartremover.warts.AsInstanceOf"))
+    @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     def getSourceCode(toPrint: c.Tree): c.Tree = {
       import c.universe._
       val fileContent: String = new String(toPrint.pos.source.content)
@@ -19,8 +19,10 @@ protected[johnreedlol] object Helpers {
           case p ⇒ p.start
         }
       }
+      @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
       val start: Int = listOfTreePositions.min // ignore [wartremover:TraversableOps] min is disabled - use foldLeft or foldRight instead
       import scala.language.existentials
+      @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
       val globalContext = c.asInstanceOf[reflect.macros.runtime.Context].global // inferred existential
       val codeParser: globalContext.syntaxAnalyzer.UnitParser = globalContext.newUnitParser(code = fileContent.drop(start))
       codeParser.expr() // This returns a value which is being ignored [wartremover:NonUnitStatements].

@@ -14,35 +14,18 @@ package object johnreedlol {
     * @example out("Hello World")
     */
   object out {
-    def apply(toPrint: AnyVal): Unit = macro outImpl
-    def apply(toPrint: AnyRef): Unit = macro outImplReference
+    def apply[Type](toPrint: Type): Unit = macro outImpl[Type]
 
     /**
       * Macro implementation.
       */
-    def outImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
+    def outImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      val myString: c.universe.Tree = q"""{$toPrint.toString()}"""
-      val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-      """
-      c.Expr[Unit](toReturn)
-    }
-
-    /**
-      * For references (which extend AnyRef), we need to do a null check.
-      */
-    def outImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
-      import c.universe._
-      val lineNum: String = c.enclosingPosition.line.toString
-      val pathAndFileName: String = c.enclosingPosition.source.path
-      val fileName: String = getFileName(pathAndFileName)
-      val path: String = c.internal.enclosingOwner.fullName.trim
-      @SuppressWarnings(Array("org.wartremover.warts.Null"))
+      @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
         _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
@@ -56,35 +39,18 @@ package object johnreedlol {
     * @example err("Hello World")
     */
   object err {
-    def apply(toPrint: AnyVal): Unit = macro errImpl
-    def apply(toPrint: AnyRef): Unit = macro errImplReference
+    def apply[Type](toPrint: Type): Unit = macro errImpl[Type]
 
     /**
       * Macro implementation.
       */
-    def errImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
+    def errImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      val myString: c.universe.Tree = q"""{$toPrint.toString()}"""
-      val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-      """
-      c.Expr[Unit](toReturn)
-    }
-
-    /**
-      * For references (which extend AnyRef), we need to do a null check.
-      */
-    def errImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
-      import c.universe._
-      val lineNum: String = c.enclosingPosition.line.toString
-      val pathAndFileName: String = c.enclosingPosition.source.path
-      val fileName: String = getFileName(pathAndFileName)
-      val path: String = c.internal.enclosingOwner.fullName.trim
-      @SuppressWarnings(Array("org.wartremover.warts.Null"))
+      @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
         _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
@@ -124,32 +90,12 @@ package object johnreedlol {
     * @example myVal = 3; codeErr{1 + 2 + myVal}
     */
   object codeErr {
-    def apply(toPrint: AnyVal): Unit = macro traceCodeImpl
-    def apply(toPrint: AnyRef): Unit = macro traceCodeImplReference
+    def apply[Type](toPrint: Type): Unit = macro traceCodeImpl[Type]
 
     /**
       * Macro implementation.
       */
-    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
-      import c.universe._
-      val lineNum: String = c.enclosingPosition.line.toString
-      val pathAndFileName: String = c.enclosingPosition.source.path
-      val fileName: String = getFileName(pathAndFileName)
-      val path: String = c.internal.enclosingOwner.fullName.trim
-      val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
-      @SuppressWarnings(Array("org.wartremover.warts.Any"))
-      val myString: c.universe.Tree = q"""{"(" + $blockString + ") -> " + ({$toPrint}.toString)}"""
-      // The java stack traces use a tab character \t, not a space.
-      val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-      """
-      c.Expr[Unit](toReturn)
-    }
-
-    /**
-      * For references (which extend AnyRef), we need to do a null check.
-      */
-    def traceCodeImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+    def traceCodeImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
@@ -171,32 +117,12 @@ package object johnreedlol {
     * @example myVal = 3; codeOut{1 + 2 + myVal}
     */
   object codeOut {
-    def apply(toPrint: AnyVal): Unit = macro traceCodeImpl
-    def apply(toPrint: AnyRef): Unit = macro traceCodeImplReference
+    def apply[Type](toPrint: Type): Unit = macro traceCodeImpl[Type]
 
     /**
       * Macro implementation.
       */
-    def traceCodeImpl(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyVal]): c.Expr[Unit] = {
-      import c.universe._
-      val lineNum: String = c.enclosingPosition.line.toString
-      val pathAndFileName: String = c.enclosingPosition.source.path
-      val fileName: String = getFileName(pathAndFileName)
-      val path: String = c.internal.enclosingOwner.fullName.trim
-      val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
-      @SuppressWarnings(Array("org.wartremover.warts.Any"))
-      val myString: c.universe.Tree = q"""{"(" + $blockString + ") -> " + ({$toPrint}.toString)}"""
-      // The java stack traces use a tab character \t, not a space.
-      val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-      """
-      c.Expr[Unit](toReturn)
-    }
-
-    /**
-      * For references (which extend AnyRef), we need to do a null check.
-      */
-    def traceCodeImplReference(c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[AnyRef]): c.Expr[Unit] = {
+    def traceCodeImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
@@ -228,23 +154,18 @@ package object johnreedlol {
       val sourceCode: c.Tree = new MacroHelperMethod[c.type](c).getSourceCode(assertion.tree)
       val arg2 = q""" "(" + $sourceCode + ") -> " + ({$assertion}.toString) """
       val args: List[c.universe.Tree] = List(arg2)
-      /*
-        def check(assertion: Boolean, message: String, numLines: Int = Int.MaxValue): String = {
-        Printer.internalAssert(message, numLines, usingStdOut = false, assertionTrue_? = assertion)
-      }
-       */
       val toReturn = q"""
         val assertBoolean = $assertion;
-        _root_.com.github.johnreedlol.check(assertBoolean, ..$args);
+        _root_.com.github.johnreedlol.checkWithMessage(assertBoolean, ..$args);
       """
       c.Expr[Unit](toReturn)
     }
   }
 
   /**
-    * Like an assertion that does not terminate the current thread
+    * Like an assertion that does not terminate the current thread.
     */
-  def check(assertion: Boolean, message: String): Unit = {
+  def checkWithMessage(assertion: Boolean, message: String): Unit = {
     Printer.internalAssert(assertion, message)
   }
 
