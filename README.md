@@ -13,6 +13,7 @@ Table of Contents
 * <a href="#Getting-Started">Getting Started</a>
 * <a href="#Instructions">Instructions for IDEA</a>
 * <a href="#Scala-Examples">Scala Examples</a>
+* <a href="#Master-Shutoff">Master Shutoff</a>
 * <a href="#Developers-Guide">Developer's Guide</a>
 * <a href="#Building">Building</a>
 
@@ -31,7 +32,7 @@ ________________________________________________________________________________
 
 ### Locate Statements:
 
-![Append Position](https://i.imgur.com/aoLoJkM.png)
+![Append Position](https://i.imgur.com/Mf9zST9.png)
 
 ^ Clicking on the compile-time generated file name and line number will cause you to jump to that line in your source code.
 
@@ -53,7 +54,9 @@ pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
 It was packaged and published like so:
 
-[Publish 1.4.0](https://gist.githubusercontent.com/JohnReedLOL/ee707f7900938679a1b23f069565c899/raw/ffd583128890cab48ef9a7f106b432213bb9abf3/publish-1.4.0.txt)
+[Publish 1.4.0](https://gist.githubusercontent.com/JohnReedLOL/ee707f7900938679a1b23f069565c899/raw/ffd583128890cab48ef9a7f106b432213bb9abf3/publish-1.4.0.txt) (No master shutoff)
+
+[Publish 2.0.0](https://gist.githubusercontent.com/JohnReedLOL/b34c10ae91f547823d3a65e0a79e3023/raw/40492342884a315da48eb402461f663c89ce2476/publish-2.0.0.txt) (Includes master shutoff)
 
 pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
@@ -97,6 +100,14 @@ ________________________________________________________________________________
 ### Scala Example:
 
 See [this file](src/test/scala/my/pkg/Main.scala) and run it yourself with "sbt test:run".
+
+____________________________________________________________________________________________________________________
+
+<a name="Master-Shutoff"></a>
+
+### Master Shutoff:
+
+Set the environment variable "DISABLE_POS_DEBUG" to anything (preferably "true") to turn this library off.
 
 ____________________________________________________________________________________________________________________
 

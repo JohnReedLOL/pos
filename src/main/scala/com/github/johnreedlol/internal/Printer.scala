@@ -29,7 +29,6 @@ package com.github.johnreedlol.internal
 /**
   * Created by johnreed on 4/12/16 for https://github.com/JohnReedLOL/scala-trace-debug
   */
-@SuppressWarnings(Array("org.wartremover.warts.Equals")) // We use == and != instead of === and =!= because no cats
 protected[johnreedlol] object Printer {
 
   /**

@@ -45,16 +45,19 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
     def outImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Nothing"))
+      @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        };
       """
       c.Expr[Unit](toReturn)
     }
@@ -70,16 +73,19 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
     def errImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
       val pathAndFileName: String = c.enclosingPosition.source.path
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
-      @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.Nothing"))
+      @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        };
       """
       c.Expr[Unit](toReturn)
     }
@@ -95,6 +101,7 @@ package object johnreedlol {
     /**
       * Do not call this - this is for internal use.
       */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
     def posImpl(c: scala.reflect.macros.blackbox.Context)(): c.Expr[String] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
@@ -102,7 +109,11 @@ package object johnreedlol {
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val toReturn = q"""
-        "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")"
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")"
+        } else {
+          ""
+        };
       """
       c.Expr[String](toReturn)
     }
@@ -121,6 +132,7 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
     def traceCodeImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
@@ -128,11 +140,13 @@ package object johnreedlol {
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
-      @SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.Null"))
+      @SuppressWarnings(Array("org.wartremover.warts.Any"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        };
       """
       c.Expr[Unit](toReturn)
     }
@@ -148,6 +162,7 @@ package object johnreedlol {
     /**
       * Macro implementation.
       */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
     def traceCodeImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
       import c.universe._
       val lineNum: String = c.enclosingPosition.line.toString
@@ -155,22 +170,21 @@ package object johnreedlol {
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val blockString = new MacroHelperMethod[c.type](c).getSourceCode(toPrint.tree)
-      @SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.Null"))
+      @SuppressWarnings(Array("org.wartremover.warts.Any"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        };
       """
       c.Expr[Unit](toReturn)
     }
   }
 
-  // Warning: You can't pass in : =>Boolean without getting "java.lang.IllegalArgumentException: Could not find proxy for val myVal"
-  // You also cannot use default parameters. Boo.
-
   /**
-    * Same as check, but prints the code instead of a user specified error message.
-    * @example val one = 1; checkCode{one + 1 == 2}
+    * Like an assertion that does not terminate the current thread.
+    * Prints the assertion as a String.
     */
   object check {
     def apply(assertion: Boolean): Unit = macro checkCodeImpl
@@ -178,11 +192,9 @@ package object johnreedlol {
     def checkCodeImpl(c: scala.reflect.macros.blackbox.Context)(assertion: c.Expr[Boolean]): c.Expr[Unit] = {
       import c.universe._
       val sourceCode: c.Tree = new MacroHelperMethod[c.type](c).getSourceCode(assertion.tree)
-      val arg2 = q""" "(" + $sourceCode + ") -> " + ({$assertion}.toString) """
-      val args: List[c.universe.Tree] = List(arg2)
+      val message = q""" "(" + $sourceCode + ") -> " + ({$assertion}.toString) """
       val toReturn = q"""
-        val assertBoolean = $assertion;
-        _root_.com.github.johnreedlol.checkWithMessage(assertBoolean, ..$args);
+        _root_.com.github.johnreedlol.checkWithMessage($assertion, $message);
       """
       c.Expr[Unit](toReturn)
     }
@@ -192,7 +204,9 @@ package object johnreedlol {
     * Like an assertion that does not terminate the current thread.
     */
   def checkWithMessage(assertion: Boolean, message: String): Unit = {
-    Printer.internalAssert(assertion, message)
+    if(System.getenv("DISABLE_POS_DEBUG") == null) {
+      Printer.internalAssert(assertion, message)
+    }
   }
 
   protected[johnreedlol] def getFileName(path: String): String = {

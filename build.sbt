@@ -40,7 +40,7 @@ pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
 scalaVersion := "2.12.6"
 
-version := "1.4.1" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "2.0.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
 crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
 
@@ -98,5 +98,5 @@ bintrayPackageLabels := Seq("debug", "scala", "trace", "debugging", "assert", "p
 
 bintrayVcsUrl := Some("git@github.com:JohnReedLOL/pos.git")
 
-// Turn on all checks that are currently considered stable:
-wartremoverErrors ++= Warts.all
+// Turn on all warts except for equals. We ignore this wart because we don't have cats/scalaz === method.
+wartremoverErrors ++= Warts.allBut(Wart.Equals)
