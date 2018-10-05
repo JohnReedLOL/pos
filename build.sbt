@@ -40,7 +40,7 @@ pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
 scalaVersion := "2.12.6"
 
-version := "2.0.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "2.1.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
 crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
 

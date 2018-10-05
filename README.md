@@ -10,6 +10,7 @@ Table of Contents
 
 * <a href="#License-And-Patents">License And Patents</a>
 * <a href="#Locate-Statements">Locate Statements</a>
+* <a href="#Logging">Logging</a>
 * <a href="#Getting-Started">Getting Started</a>
 * <a href="#Instructions">Instructions for IDEA</a>
 * <a href="#Scala-Examples">Scala Examples</a>
@@ -38,11 +39,21 @@ ________________________________________________________________________________
 
 Better than using println! Also, it is safe to pass in null.
 
-Use it with a logger like so:
+____________________________________________________________________________________________________________________
+
+<a name="Logging"></a>
+
+### Logging:
+
+Wrap your logger in a helper method like so to capture the compile time stack trace:
+
+![Logger](https://i.imgur.com/wkXxbCd.png)
+
+Or just return the compile time stack trace as a String:
 
 `logger.warn("This is a warning" + pos())`
 
-"pos() does not rely on runtime reflection or stack inspection, and is done at compile-time using macros. This means that it is both orders of magnitude faster than e.g. getting file-name and line-numbers using stack inspection, and also works on Scala.js where reflection and stack inspection can't be used." - taken from Li Haoyi's *sourcecode*
+This functionality "does not rely on runtime reflection or stack inspection, and is done at compile-time using macros. This means that it is both orders of magnitude faster than e.g. getting file-name and line-numbers using stack inspection, and also works on Scala.js where reflection and stack inspection can't be used." - taken from Li Haoyi's *sourcecode*
 
 ____________________________________________________________________________________________________________________
 

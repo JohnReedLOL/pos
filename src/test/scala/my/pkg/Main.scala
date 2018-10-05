@@ -39,6 +39,13 @@ object Main {
     Thread.sleep(milliseconds)
   }
 
+import com.github.johnreedlol.implicits.Pos
+@SuppressWarnings(Array("org.wartremover.warts.ImplicitParameter"))
+def doLogging(message: String)(implicit position: Pos): Unit = {
+  println(message + position.text)
+}
+doLogging("FooBar") // FooBar  at my.pkg.Main.<local Main>(Main.scala:47)
+
   def main(args: Array[String]): Unit = {
     /*
      * Note: `out(5)` emits "comparing values of types Int and Null using `==' will always yield false"
@@ -46,6 +53,7 @@ object Main {
      * So I removed that fix in version 1.3.0
      */
     import com.github.johnreedlol._
+    doLogging("Foo bar") // Foo bar at my.pkg.Main.main(Main.scala:56)
     out(5)
     out("Hello")
     sleep()
@@ -97,41 +105,25 @@ object Main {
 /*
 Output if environment variable DISABLE_POS_DEBUG is not set:
 username$ sbt test:run
-[info] Loading settings from idea.sbt ...
-[info] Loading global plugins from /Users/username/.sbt/1.0/plugins
-[info] Loading settings from plugins.sbt ...
-[info] Loading project definition from /Users/username/Downloads/scala-trace-debug/5.0/project
-[info] Loading settings from build.sbt ...
-[info] Set current project to pos (in build file:/Users/username/Downloads/scala-trace-debug/5.0/)
-[info] Compiling 1 Scala source to /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/test-classes ...
-[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:49:8: comparing values of types Int and Null using `==' will always yield false
-[warn]     out(5)
-[warn]        ^
-[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:53:8: comparing values of types Int and Null using `==' will always yield false
-[warn]     err(6)
-[warn]        ^
-[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:59:12: comparing values of types Int and Null using `==' will always yield false
-[warn]     codeOut(one + two)
-[warn]            ^
-[warn] /Users/username/Downloads/scala-trace-debug/5.0/src/test/scala/my/pkg/Main.scala:63:12: comparing values of types Int and Null using `==' will always yield false
-[warn]     codeErr(three * four)
-[warn]            ^
-[warn] four warnings found
-[info] Done compiling.
-[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-1.4.1-tests.jar ...
+...
+[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-2.1.0-tests.jar ...
+[info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-2.1.0.jar ...
 [info] Done packaging.
-[info] Running my.pkg.Main 
-5       at my.pkg.Main.main(Main.scala:49)
-Hello   at my.pkg.Main.main(Main.scala:50)
-World   at my.pkg.Main.main(Main.scala:52)
-6       at my.pkg.Main.main(Main.scala:53)
-This will contain a compiler generated stack trace      at my.pkg.Main.main(Main.scala:55)
+[info] Done packaging.
+[info] Running my.pkg.Main
+FooBar  at my.pkg.Main.<local Main>(Main.scala:47)
+Foo bar at my.pkg.Main.main(Main.scala:56)
+5       at my.pkg.Main.main(Main.scala:57)
+Hello   at my.pkg.Main.main(Main.scala:58)
+World   at my.pkg.Main.main(Main.scala:60)
+6       at my.pkg.Main.main(Main.scala:61)
+This will contain a compiler generated stack trace      at my.pkg.Main.main(Main.scala:63)
 This line will not contain a compiler generated stack trace.
-(one + two) -> 3        at my.pkg.Main.main(Main.scala:59)
-(three * four) -> 12    at my.pkg.Main.main(Main.scala:63)
+(one + two) -> 3        at my.pkg.Main.main(Main.scala:67)
+(three * four) -> 12    at my.pkg.Main.main(Main.scala:71)
 "(three == four) -> false" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:67) [pos_2.12-1.4.1-tests.jar]
-        at my.pkg.Main.main(Main.scala) [pos_2.12-1.4.1-tests.jar]
+        at my.pkg.Main$.main(Main.scala:75) [pos_2.12-2.1.0-tests.jar]
+        at my.pkg.Main.main(Main.scala) [pos_2.12-2.1.0-tests.jar]
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -146,8 +138,8 @@ This line will not contain a compiler generated stack trace.
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
 "Three must not equal four" in thread run-main-0:
-        at my.pkg.Main$.main(Main.scala:68) [pos_2.12-1.4.1-tests.jar]
-        at my.pkg.Main.main(Main.scala) [pos_2.12-1.4.1-tests.jar]
+        at my.pkg.Main$.main(Main.scala:76) [pos_2.12-2.1.0-tests.jar]
+        at my.pkg.Main.main(Main.scala) [pos_2.12-2.1.0-tests.jar]
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -161,14 +153,14 @@ This line will not contain a compiler generated stack trace.
         at sbt.TrapExit$App.run(TrapExit.scala:252)
         at java.lang.Thread.run(Thread.java:748)
 ^ The above stack trace leads to an assertion failure. ^
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:80)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:82)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:84)
-null    at my.pkg.Main.runNullSafetyTest(Main.scala:86)
-null
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:88)
 null    at my.pkg.Main.runNullSafetyTest(Main.scala:90)
 null    at my.pkg.Main.runNullSafetyTest(Main.scala:92)
-[success] Total time: 7 s, completed Oct 4, 2018 9:45:51 PM
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:94)
+null
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:98)
+null    at my.pkg.Main.runNullSafetyTest(Main.scala:100)
+[success] Total time: 1 s, completed Oct 5, 2018 2:49:39 AM
  */
 
 /*
