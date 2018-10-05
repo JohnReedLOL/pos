@@ -69,6 +69,8 @@ It was packaged and published like so:
 
 [Publish 2.0.0](https://gist.githubusercontent.com/JohnReedLOL/b34c10ae91f547823d3a65e0a79e3023/raw/40492342884a315da48eb402461f663c89ce2476/publish-2.0.0.txt) (Includes master shutoff)
 
+[Publish 2.1.0](https://gist.githubusercontent.com/JohnReedLOL/70f1e17a9ceb338140b27cd90eb78841/raw/b129b8425080f8f33152ef4edd938c775f7c210a/publish-2.1.0.txt) (Includes implicit parameter for logging)
+
 pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
 Add these two lines to your build.sbt:
