@@ -40,7 +40,7 @@ pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
 scalaVersion := "2.12.6"
 
-version := "1.4.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "1.4.1" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
 crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
 
@@ -78,7 +78,8 @@ scalacOptions ++= Seq(
   "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
   "-Ywarn-numeric-widen",              // Warn when numerics are widened.
   "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
-  "-Ywarn-unused"
+  "-Ywarn-unused",
+  "-Xfatal-warnings"
 )
 
 scalacOptions in Test --= Seq("-Xfatal-warnings")

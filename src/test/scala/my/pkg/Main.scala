@@ -36,7 +36,7 @@ object Main {
     * To prevent output mangling
     */
   def sleep(): Unit = {
-    val milliseconds = 60
+    val milliseconds = 60L
     Thread.sleep(milliseconds)
   }
 

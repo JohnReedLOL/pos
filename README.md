@@ -8,6 +8,7 @@ ________________________________________________________________________________
 
 Table of Contents
 
+* <a href="#License-And-Patents">License And Patents</a>
 * <a href="#Locate-Statements">Locate Statements</a>
 * <a href="#Getting-Started">Getting Started</a>
 * <a href="#Instructions">Instructions for IDEA</a>
@@ -15,6 +16,14 @@ Table of Contents
 * <a href="#Developers-Guide">Developer's Guide</a>
 * <a href="#Building">Building</a>
 
+
+____________________________________________________________________________________________________________________
+
+<a name="License-And-Patents"></a>
+
+### License And Patents:
+
+*pos* is licensed under the MIT License, a very permissive license that permits commercial use, modification, distribution, and private use. *pos* is not covered by any patents, and I, John Reed, the author of this software, do not intend to apply for any. This software is available free of charge and without restrictions other than those specified in the MIT license.
 ____________________________________________________________________________________________________________________
 
 
