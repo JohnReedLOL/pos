@@ -8,7 +8,6 @@ ________________________________________________________________________________
 
 Table of Contents
 
-* <a href="#License-And-Patents">License And Patents</a>
 * <a href="#Locate-Statements">Locate Statements</a>
 * <a href="#Logging">Logging</a>
 * <a href="#Getting-Started">Getting Started</a>
@@ -17,15 +16,8 @@ Table of Contents
 * <a href="#Master-Shutoff">Master Shutoff</a>
 * <a href="#Developers-Guide">Developer's Guide</a>
 * <a href="#Building">Building</a>
+* <a href="#License">License</a>
 
-
-____________________________________________________________________________________________________________________
-
-<a name="License-And-Patents"></a>
-
-### License And Patents:
-
-*pos* is licensed under the MIT License, a very permissive license that permits commercial use, modification, distribution, and private use. *pos* is not covered by any patents, and I, John Reed, the author of this software, do not intend to apply for any. This software is available free of charge and without restrictions other than those specified in the MIT license.
 ____________________________________________________________________________________________________________________
 
 
@@ -70,6 +62,8 @@ It was packaged and published like so:
 [Publish 2.0.0](https://gist.githubusercontent.com/JohnReedLOL/b34c10ae91f547823d3a65e0a79e3023/raw/40492342884a315da48eb402461f663c89ce2476/publish-2.0.0.txt) (Includes master shutoff)
 
 [Publish 2.1.0](https://gist.githubusercontent.com/JohnReedLOL/70f1e17a9ceb338140b27cd90eb78841/raw/b129b8425080f8f33152ef4edd938c775f7c210a/publish-2.1.0.txt) (Includes implicit parameter for logging)
+
+Publish 2.1.1 changes the license to Apache 2.0 to provide the option of protection against patent claims.
 
 pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
@@ -155,3 +149,13 @@ ________________________________________________________________________________
 ### Building:
 
 Java 8 and up
+
+____________________________________________________________________________________________________________________
+
+<a name="License"></a>
+
+### License:
+
+[The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+*pos* is currently licensed under the Apache 2.0 License, a permissive license that also protects against patent patent claims.
