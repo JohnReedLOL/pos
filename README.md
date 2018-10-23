@@ -31,6 +31,39 @@ ________________________________________________________________________________
 
 Better than using println! Also, it is safe to pass in null.
 
+Implementation:
+![Out](https://i.imgur.com/B3mO3SOh.jpg)
+
+```
+  /**
+    * Prints the value along with a clickable hyperlink to the location in the source code to std out
+    * @example out("Hello World")
+    */
+  object out {
+    def apply[Type](toPrint: Type): Unit = macro outImpl[Type]
+
+    /**
+      * Macro implementation.
+      */
+    @SuppressWarnings(Array("org.wartremover.warts.Null"))
+    def outImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
+      import c.universe._
+      val lineNum: String = c.enclosingPosition.line.toString
+      val pathAndFileName: String = c.enclosingPosition.source.path
+      val fileName: String = getFileName(pathAndFileName)
+      val path: String = c.internal.enclosingOwner.fullName.trim
+      @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
+      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
+      val toReturn = q"""
+        if(System.getenv("DISABLE_POS_DEBUG") == null) {
+          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
+        };
+      """
+      c.Expr[Unit](toReturn)
+    }
+  }
+```
+
 ____________________________________________________________________________________________________________________
 
 <a name="Logging"></a>
