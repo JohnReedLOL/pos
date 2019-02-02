@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 package my.pkg
-
+import com.github.johnreedlol.logging.TraceLogging
 /**
   * Created by johnreed on 3/23/16. Run with sbt test:run
   */
-object Main {
+object Main extends TraceLogging {
 
   /**
     * To prevent output mangling
@@ -35,7 +35,18 @@ def doLogging(message: String)(implicit position: Pos): Unit = {
 }
 doLogging("FooBar") // FooBar  at my.pkg.Main.<local Main>(Main.scala:47)
 
+  @SuppressWarnings(Array("org.wartremover.warts.Null"))
   def main(args: Array[String]): Unit = {
+    // This tests the logging functionality:
+    trace("Test0")
+    debug("Test1")
+    info("Test2")
+    warn("Test3")
+    warn(null)
+    sleep()
+    error("Test4")
+    error(null)
+    sleep()
     /*
      * Note: `out(5)` emits "comparing values of types Int and Null using `==' will always yield false"
      * This was fixed in version 1.2.0, but that fix required method overloading and caused problems when passing in values of type "Any"
@@ -60,7 +71,7 @@ doLogging("FooBar") // FooBar  at my.pkg.Main.<local Main>(Main.scala:47)
     codeErr(three * four)
     check(three != four)
     checkWithMessage(three != four, "Three must not equal four")
-    // This should generate a stack trace unless "DISABLE_POS_DEBUG" is set.
+    // This should generate a stack trace.
     check(three == four)
     checkWithMessage(three == four, "Three must not equal four")
     sleep()
@@ -92,7 +103,7 @@ doLogging("FooBar") // FooBar  at my.pkg.Main.<local Main>(Main.scala:47)
 }
 
 /*
-Output if environment variable DISABLE_POS_DEBUG is not set:
+Output:
 username$ sbt test:run
 ...
 [info] Packaging /Users/username/Downloads/scala-trace-debug/5.0/target/scala-2.12/pos_2.12-2.1.0-tests.jar ...
@@ -153,8 +164,7 @@ null    at my.pkg.Main.runNullSafetyTest(Main.scala:100)
  */
 
 /*
-Output if environment variable DISABLE_POS_DEBUG is set:
-username$ export DISABLE_POS_DEBUG=true
+Output:
 username$ sbt test:run
 [info] Loading settings from idea.sbt ...
 [info] Loading global plugins from /Users/username/.sbt/1.0/plugins

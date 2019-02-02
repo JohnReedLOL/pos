@@ -26,11 +26,7 @@ object Pos {
     val path: String = c.internal.enclosingOwner.fullName.trim
     @SuppressWarnings(Array("org.wartremover.warts.Null"))
     val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")"
-        } else {
-          ""
-        }
+          " - " + $path + "(" + $fileName + ":" + $lineNum + ")"
       """
     c.Expr[Pos](q"""com.github.johnreedlol.implicits.Pos.apply($toReturn);""")
   }

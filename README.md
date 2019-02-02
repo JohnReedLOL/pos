@@ -55,9 +55,7 @@ Implementation:
       @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-        };
+          _root_.scala.Console.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -70,7 +68,11 @@ ________________________________________________________________________________
 
 ### Logging:
 
-Wrap your logger in a helper method like so to capture the compile time stack trace:
+Use this instead of Scala StrictLogging:
+
+![TraceLogger](https://i.imgur.com/pG3s3hI.png)
+
+Or you can wrap your logger in a helper method like so to capture the compile time stack trace:
 
 ![Logger](https://i.imgur.com/wkXxbCd.png)
 
@@ -140,14 +142,6 @@ ________________________________________________________________________________
 ### Scala Example:
 
 See [this file](src/test/scala/my/pkg/Main.scala) and run it yourself with "sbt test:run".
-
-____________________________________________________________________________________________________________________
-
-<a name="Master-Shutoff"></a>
-
-### Master Shutoff:
-
-Set the environment variable "DISABLE_POS_DEBUG" to anything (preferably "true") to turn this library off.
 
 ____________________________________________________________________________________________________________________
 

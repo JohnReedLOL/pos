@@ -27,11 +27,11 @@ scmInfo := Some(ScmInfo(new URL("https://github.com/JohnReedLOL/pos"),
 
 pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.8"
 
-version := "2.1.1" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
+version := "2.2.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
-crossScalaVersions := Seq("2.11.12", "2.12.6", "2.13.0-M4")
+crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.0-M5")
 
 resolvers += Resolver.sonatypeRepo("releases")
 
@@ -46,7 +46,10 @@ def macroDependencies(version: String): Seq[ModuleID] = Seq(
 
 libraryDependencies ++= macroDependencies(scalaVersion.value)
 
-scalacOptions ++= Seq("-Xlint", "-Ywarn-unused-import")
+// A compatible logging backend is Logback, add it to your sbt build definition:
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
+
+scalacOptions ++= Seq("-Xlint")
 
 // Taken from https://tpolecat.github.io/2017/04/25/scalac-flags.html
 
@@ -60,22 +63,10 @@ scalacOptions ++= Seq(
   "-language:higherKinds",             // Allow higher-kinded types
   "-language:implicitConversions",     // Allow definition of implicit functions called views
   "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
-  "-Ywarn-dead-code",                  // Warn when dead code is identified.
-  "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
-  "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
-  "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-  "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
-  "-Ywarn-numeric-widen",              // Warn when numerics are widened.
-  "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
-  "-Ywarn-unused",
-  "-Xfatal-warnings"
+  "-Ywarn-dead-code"                  // Warn when dead code is identified.
 )
 
-scalacOptions in Test --= Seq("-Xfatal-warnings")
-
-// Note that the REPL can’t really cope with -Ywarn-unused:imports or -Xfatal-warnings so you should turn them off for the console.
-
-scalacOptions in (Compile, console) --= Seq("-Ywarn-unused-import", "-Xfatal-warnings")
+skip in publish := false
 
 bintrayReleaseOnPublish in ThisBuild := true
 

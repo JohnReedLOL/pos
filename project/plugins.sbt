@@ -21,7 +21,9 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
 
 // Removes warts like null
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.3.7")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.1")
+
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.4")
 
 // resolvers += Resolver.sonatypeRepo("releases")
 

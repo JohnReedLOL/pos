@@ -44,9 +44,7 @@ package object johnreedlol {
       @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-        };
+          _root_.scala.Console.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -72,9 +70,7 @@ package object johnreedlol {
       @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-        };
+          _root_.java.lang.System.err.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -98,11 +94,7 @@ package object johnreedlol {
       val fileName: String = getFileName(pathAndFileName)
       val path: String = c.internal.enclosingOwner.fullName.trim
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")"
-        } else {
-          ""
-        };
+          " - " + $path + "(" + $fileName + ":" + $lineNum + ")"
       """
       c.Expr[String](toReturn)
     }
@@ -133,9 +125,7 @@ package object johnreedlol {
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          _root_.java.lang.System.err.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-        };
+          _root_.java.lang.System.err.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -163,9 +153,7 @@ package object johnreedlol {
       val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {"(" + $blockString + ") -> " + ({$toPrint}.toString)}}"""
       // The java stack traces use a tab character \t, not a space.
       val toReturn = q"""
-        if(System.getenv("DISABLE_POS_DEBUG") == null) {
-          _root_.scala.Console.println($myString + "\t" + "at " + $path + "(" + $fileName + ":" + $lineNum + ")");
-        };
+          _root_.scala.Console.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
       """
       c.Expr[Unit](toReturn)
     }
@@ -193,9 +181,7 @@ package object johnreedlol {
     * Like an assertion that does not terminate the current thread.
     */
   def checkWithMessage(assertion: Boolean, message: String): Unit = {
-    if(System.getenv("DISABLE_POS_DEBUG") == null) {
       Printer.internalAssert(assertion, message)
-    }
   }
 
   protected[johnreedlol] def getFileName(path: String): String = {
