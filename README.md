@@ -100,6 +100,9 @@ It was packaged and published like so:
 
 [Publish 2.1.1](https://gist.github.com/JohnReedLOL/949ae6dd7e3186fe00f612790a19d7e7) changes the license to Apache 2.0 to provide the option of protection against patent claims.
 
+[Publish 2.2.0](https://github.com/sbt/sbt-bintray/issues/164)
+Removes the environment variable (master shutoff) and creates a TraceLogging trait that can be used instead of StrictLogging.
+
 pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
 
 Add these two lines to your build.sbt:
