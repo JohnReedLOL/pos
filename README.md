@@ -68,8 +68,8 @@ ________________________________________________________________________________
 
 ### Logging:
 
-Use "TraceLogging" instead of Scala StrictLoggins, as in: 
-https://github.com/JohnReedLOL/pos/blob/master/src/test/scala/my/pkg/Main.scala 
+Use "TraceLogging" instead of "StrictLogging", as in: 
+- https://github.com/JohnReedLOL/pos/blob/master/src/test/scala/my/pkg/Main.scala 
 
 ![TraceLogger](https://i.imgur.com/pG3s3hI.png)
 
