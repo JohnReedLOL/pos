@@ -21,7 +21,7 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.2")
 
 // Removes warts like null
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.1")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.2")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.4.0")
 
