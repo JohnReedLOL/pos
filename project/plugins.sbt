@@ -23,7 +23,7 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.2")
 // Removes warts like null
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.1")
 
-addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.4.0")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.4.2")
 
 // resolvers += Resolver.sonatypeRepo("releases")
 
