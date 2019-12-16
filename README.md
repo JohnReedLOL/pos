@@ -8,7 +8,7 @@ ________________________________________________________________________________
 
 Table of Contents
 
-* <a href="#Locate-Statements">Locate Statements</a>
+* <a href="#Locate-Print-Statements">Locate Print Statements</a>
 * <a href="#Logging">Logging</a>
 * <a href="#Getting-Started">Getting Started</a>
 * <a href="#Instructions">Instructions for IDEA</a>
@@ -20,9 +20,9 @@ Table of Contents
 ____________________________________________________________________________________________________________________
 
 
-<a name="Locate-Statements"></a>
+<a name="Locate-Print-Statements"></a>
 
-### Locate Statements:
+### Locate Print Statements:
 
 ![Append Position](https://i.imgur.com/Mf9zST9.png)
 
