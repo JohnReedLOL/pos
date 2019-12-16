@@ -75,7 +75,7 @@ Or you can wrap your logger in a helper method like so to capture the compile ti
 
 ![Logger](https://i.imgur.com/wkXxbCd.png)
 
-Or just return the compile time stack trace as a String:
+Or manually append the compile time stack trace as a String:
 
 `logger.warn("This is a warning" + pos())`
 
