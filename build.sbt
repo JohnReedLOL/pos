@@ -31,7 +31,7 @@ scalaVersion := "2.12.8"
 
 version := "2.2.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
-crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.0-M5")
+crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.1")
 
 resolvers += Resolver.sonatypeRepo("releases")
 
