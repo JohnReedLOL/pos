@@ -56,7 +56,7 @@ ________________________________________________________________________________
 
 ### Getting Started:
 
-Add these two lines to your build.sbt:
+Add these two lines to your build.sbt file:
 
 `resolvers += Resolver.bintrayRepo("johnreed2","maven")`
 
