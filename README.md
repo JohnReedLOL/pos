@@ -31,7 +31,6 @@ ________________________________________________________________________________
 Better than using println! Also, it is safe to pass in null.
 
 Implementation:
-![Out](https://i.imgur.com/B3mO3SOh.jpg)
 
 ```
   /**
