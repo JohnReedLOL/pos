@@ -56,19 +56,6 @@ ________________________________________________________________________________
 
 ### Getting Started:
 
-pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
-
-It was packaged and published like so:
-
-[Publish 2.1.0](https://gist.githubusercontent.com/JohnReedLOL/70f1e17a9ceb338140b27cd90eb78841/raw/b129b8425080f8f33152ef4edd938c775f7c210a/publish-2.1.0.txt) (Includes implicit parameter for logging)
-
-[Publish 2.1.1](https://gist.github.com/JohnReedLOL/949ae6dd7e3186fe00f612790a19d7e7) changes the license to Apache 2.0 to provide the option of protection against patent claims.
-
-[Publish 2.2.0](https://github.com/sbt/sbt-bintray/issues/164)
-Removes the environment variable (master shutoff) and creates a TraceLogging trait that can be used instead of StrictLogging.
-
-pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
-
 Add these two lines to your build.sbt:
 
 `resolvers += Resolver.bintrayRepo("johnreed2","maven")`
@@ -76,6 +63,9 @@ Add these two lines to your build.sbt:
 `libraryDependencies += "com.github.johnreedlol" %% "pos" % "2.2.0"`
 
 To avoid having deprecated stuff, this library only works for Scala 2.10 and up.
+
+pos is a stripped down version of [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug).
+
 ____________________________________________________________________________________________________________________
 
 <a name="Instructions"></a>
