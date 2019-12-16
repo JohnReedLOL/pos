@@ -27,7 +27,7 @@ scmInfo := Some(ScmInfo(new URL("https://github.com/JohnReedLOL/pos"),
 
 pomExtra := <url>https://github.com/JohnReedLOL/pos</url>
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.1"
 
 version := "2.2.0" // For compatibility, only use first two digits (MajorVersion, MinorVersion)
 
