@@ -36,8 +36,7 @@ ________________________________________________________________________________
 
 ### Logging:
 
-Use "[TraceLogging](https://github.com/JohnReedLOL/pos/blob/master/src/main/scala/com/github/johnreedlol/logging/TraceLogging.scala)" instead of "StrictLogging". Click image to enlarge: 
-- https://github.com/JohnReedLOL/pos/blob/master/src/test/scala/my/pkg/Main.scala 
+Use "[TraceLogging](https://github.com/JohnReedLOL/pos/blob/master/src/main/scala/com/github/johnreedlol/logging/TraceLogging.scala)" instead of "StrictLogging". Click image to enlarge:
 
 ![TraceLogger](https://i.imgur.com/pG3s3hI.png)
 
