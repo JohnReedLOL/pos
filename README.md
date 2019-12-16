@@ -30,43 +30,13 @@ ________________________________________________________________________________
 
 Better than using println! Also, it is safe to pass in null.
 
-Implementation:
-
-```
-  /**
-    * Prints the value along with a clickable hyperlink to the location in the source code to std out
-    * @example out("Hello World")
-    */
-  object out {
-    def apply[Type](toPrint: Type): Unit = macro outImpl[Type]
-
-    /**
-      * Macro implementation.
-      */
-    @SuppressWarnings(Array("org.wartremover.warts.Null"))
-    def outImpl[Type](c: scala.reflect.macros.blackbox.Context)(toPrint: c.Expr[Type]): c.Expr[Unit] = {
-      import c.universe._
-      val lineNum: String = c.enclosingPosition.line.toString
-      val pathAndFileName: String = c.enclosingPosition.source.path
-      val fileName: String = getFileName(pathAndFileName)
-      val path: String = c.internal.enclosingOwner.fullName.trim
-      @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
-      val myString: c.universe.Tree = q"""{if($toPrint == null) {"null"} else {$toPrint.toString()}}""" // [wartremover:Null] null is disabled
-      val toReturn = q"""
-          _root_.scala.Console.println($myString + " - " + $path + "(" + $fileName + ":" + $lineNum + ")");
-      """
-      c.Expr[Unit](toReturn)
-    }
-  }
-```
-
 ____________________________________________________________________________________________________________________
 
 <a name="Logging"></a>
 
 ### Logging:
 
-Use "TraceLogging" instead of "StrictLogging", as in: 
+Use "[TraceLogging](https://github.com/JohnReedLOL/pos/blob/master/src/main/scala/com/github/johnreedlol/logging/TraceLogging.scala)" instead of "StrictLogging". Click image to enlarge: 
 - https://github.com/JohnReedLOL/pos/blob/master/src/test/scala/my/pkg/Main.scala 
 
 ![TraceLogger](https://i.imgur.com/pG3s3hI.png)
@@ -91,10 +61,6 @@ pos is available through [sbt bintray](https://bintray.com/johnreed2/maven/pos).
 
 It was packaged and published like so:
 
-[Publish 1.4.0](https://gist.githubusercontent.com/JohnReedLOL/ee707f7900938679a1b23f069565c899/raw/ffd583128890cab48ef9a7f106b432213bb9abf3/publish-1.4.0.txt) (No master shutoff)
-
-[Publish 2.0.0](https://gist.githubusercontent.com/JohnReedLOL/b34c10ae91f547823d3a65e0a79e3023/raw/40492342884a315da48eb402461f663c89ce2476/publish-2.0.0.txt) (Includes master shutoff)
-
 [Publish 2.1.0](https://gist.githubusercontent.com/JohnReedLOL/70f1e17a9ceb338140b27cd90eb78841/raw/b129b8425080f8f33152ef4edd938c775f7c210a/publish-2.1.0.txt) (Includes implicit parameter for logging)
 
 [Publish 2.1.1](https://gist.github.com/JohnReedLOL/949ae6dd7e3186fe00f612790a19d7e7) changes the license to Apache 2.0 to provide the option of protection against patent claims.
@@ -108,7 +74,7 @@ Add these two lines to your build.sbt:
 
 `resolvers += Resolver.bintrayRepo("johnreed2","maven")`
 
-`libraryDependencies += "com.github.johnreedlol" %% "pos" % <most recent version as seen in:` [build.sbt](build.sbt) `>`
+`libraryDependencies += "com.github.johnreedlol" %% "pos" % "2.2.0"
 
 To avoid having deprecated stuff, this library only works for Scala 2.10 and up.
 ____________________________________________________________________________________________________________________
