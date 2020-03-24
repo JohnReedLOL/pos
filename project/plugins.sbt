@@ -18,7 +18,7 @@ addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.6")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.2")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.1")
 
 // Removes warts like null
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.5")
